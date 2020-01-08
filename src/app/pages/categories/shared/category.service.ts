@@ -31,6 +31,13 @@ export class CategoryService {
     );
   }
 
+  create(category: Category): Observable<Category> {
+    return this.http.post(this.apiPath, category).pipe(
+      catchError(this.handleError),
+      map(this.jsonDataToCategory)
+    );
+  }
+
   //Private methods
 
   private jsonDataToCategories(jsonData: any[]): Category[] {
