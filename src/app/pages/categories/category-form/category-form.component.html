@@ -18,6 +18,13 @@
 
 <form [formGroup]="categoryForm" (submit)="submitForm()">
     <div class="card">
+        <div class="alert alert-danger mb-0" *ngIf="serverErrorMessages">
+            <strong>Erro no servidor:</strong>
+            <ul>
+                <li *ngFor="let error of serverErrorMessages">{{error}}</li>
+            </ul>
+        </div>
+
         <div class="card-header">
             Informações sobre a categoria
         </div>
