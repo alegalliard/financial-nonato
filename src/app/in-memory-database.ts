@@ -1,5 +1,6 @@
 import { InMemoryDbService } from 'angular-in-memory-web-api';
 import { Category } from './pages/categories/shared/category.model'; 
+import { Entry } from './pages/entries/shared/entry.model';
 
 export class InMemoryDatabase implements InMemoryDbService {
     createDb() {
@@ -11,6 +12,14 @@ export class InMemoryDatabase implements InMemoryDbService {
             { id: 5, name: 'Freelas', description: 'Trabalhos como freelancer' }
         ];
 
-        return { categories };
+        const entries: Entry[] = [
+            { id: 1, name: 'Gás', description: '', date: '25/10/2020', amount: '85,00', paid: true, categoryId: categories[1].id, category: categories[1], paidText: 'Pago', type: 'expense' } as Entry,
+            { id: 2, name: 'Suplementos', description: '', date: '15/11/2020', amount: '120,00', paid: true, categoryId: categories[2].id, category: categories[2], paidText: 'Pago', type: 'expense' } as Entry,
+            // { id: 3, name: 'Cinema', description: '', date: '15/11/2020', amount: '25,00', paid: false, categoryId: category[3].id, categories: categories[3], paidText: 'Pago', type: 'revenue' } as Entry,
+            // { id: 4, name: 'Água', description: '', date: '15/11/2020', amount: '73,00', paid: false, categoryId: category[4].id, categories: categories[4], paidText: 'Pago', type: 'expense' } as Entry,
+            // { id: 5, name: 'Luz', description: '', date: '17/11/2020', amount: '44,00', paid: true, categoryId: category[5].id, categories: categories[5], paidText: 'Pago', type: 'revenue'} as Entry,
+        ]
+
+        return { categories, entries };
     }
 }

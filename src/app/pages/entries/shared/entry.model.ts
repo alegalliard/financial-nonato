@@ -7,6 +7,8 @@ export class Entry {
     public amount: string;
     public paid:  boolean;
     public categoryId: number;
+    public date: string;
+    public type: string;
     public category: Category;
 
 
