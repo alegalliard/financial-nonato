@@ -92,16 +92,17 @@ export class CategoryFormComponent implements OnInit {
     const category: Category = Object.assign(new Category(), this.categoryForm.value);
 
     this.categoryService.create(category)
-        .subscribe(category => this.actionsForSuccess(category)),
-              error => this.actionsForError(error)
+        .subscribe(category => this.actionsForSuccess(category),
+        error => this.actionsForError(error));
   }
 
   private updateCategory() {
     const category: Category = Object.assign(new Category(), this.categoryForm.value);
 
     this.categoryService.update(category)
-        .subscribe(category => this.actionsForSuccess(category)),
-        error => this.actionsForError(error)
+        .subscribe(category => this.actionsForSuccess(category),
+                      error => this.actionsForError(error));
+        
 
   }
 
