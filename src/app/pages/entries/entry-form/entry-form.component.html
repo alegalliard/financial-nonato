@@ -7,16 +7,16 @@
     </nav>
     
     <div class="row mb-4">
-        <div class="col-md">
+        <div class="col-md-9">
             <h1 class="h2 border-left pl-2">{{pageTitle}}</h1>
         </div>
     
-        <div class="col-md">
+        <div class="col-md-3">
             <a routerLink="/entries" class="btn btn-light float-right">Voltar</a>
         </div>
     </div>
     
-    <!-- <form [formGroup]="entryForm" (submit)="submitForm()">
+    <form [formGroup]="entryForm" (submit)="submitForm()">
         <div class="card">
             <div class="alert alert-danger mb-0" *ngIf="serverErrorMessages">
                 <strong>Erro no servidor:</strong>
@@ -31,9 +31,14 @@
     
             <div class="card-body">
                 <div class="form-row">
-                    <div class="form-group col-md-4">
-                        <label for="name">Nome</label>
-                        <input type="text" class="form-control" id="name" formControlName="name">
+
+                    <!-- type -->
+                    <div class="form-group col-md-2">
+                        <label for="type">Nome</label>
+                        <select name="type" id="type" formControlName="type" class="form-control">
+                            <option value="expense">Despesa</option>
+                            <option value="revenues">Receita</option>
+                        </select>
                         <div class="text-danger" *ngIf="entryForm.get('name').invalid && entryForm.get('name').touched">
                             <span *ngIf="entryForm.get('name').errors.required">
                                 Campo obrigatório
@@ -44,7 +49,45 @@
                             </span>
                         </div>
                     </div>
-    
+
+                    
+                    <!-- name -->
+                    <div class="form-group col-md-5">
+                        <label for="name">Lançamento</label>
+                        <input type="text" class="form-control" id="name" formControlName="name">
+                        <div class="text-danger" *ngIf="entryForm.get('name').invalid && entryForm.get('name').touched">
+                            <span *ngIf="entryForm.get('name').errors.required">
+                                Campo obrigatório
+                            </span>
+                            
+                            <span *ngIf="entryForm.get('name').errors.minlength">
+                                Deve conter no mínimo 2 caracteres
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- amount  -->
+                    <div class="form-group col-md-3">
+                        <label for="amaount">Valor</label>
+                        <div class="input-group">
+                            <div class="input-group-prepend">
+                                <div class="input-group-text">R$</div>
+                            </div>
+                            <input type="text" [imask]="imaskConfig" class="form-control" id="amount" formControlName="amount">
+                        </div>
+                        
+                        <div class="text-danger" *ngIf="entryForm.get('name').invalid && entryForm.get('name').touched">
+                            <span *ngIf="entryForm.get('name').errors.required">
+                                Campo obrigatório
+                            </span>
+        
+                            <span *ngIf="entryForm.get('name').errors.minlength">
+                                Deve conter no mínimo 2 caracteres
+                            </span>
+                        </div>
+                    </div>
+                    
+                    <!-- description -->
                     <div class="form-group col-md-8">
                         <label for="description">Descrição</label>
                         <input type="text" class="form-control" id="description" formControlName="description">
@@ -53,4 +96,4 @@
                 <button [disabled]="submittingForm || entryForm.invalid" type="submit" class="btn btn-primary">Salvar</button>
             </div>
         </div>
-    </form> -->
+    </form>

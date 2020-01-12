@@ -21,6 +21,15 @@ export class EntryFormComponent implements OnInit {
   submittingForm: boolean = false;
   entry: Entry = new Entry();
 
+  imaskConfig = {
+    mask: Number,
+    scale: 2,
+    thousandsSeparator:'',
+    padFractionalZeros: true,
+    normalizeZeros: true,
+    radix: ','
+  };
+
   constructor(
     private entryService: EntryService,
     private route: ActivatedRoute,
@@ -61,7 +70,13 @@ export class EntryFormComponent implements OnInit {
     this.entryForm = this.formBuilder.group({
       id: [null],
       name: [null, [Validators.required, Validators.minLength(2)]],
-      description: [null]
+      description: [null],
+      type: [null, Validators.required],
+      amount: [null, Validators.required],
+      data: [null, Validators.required],
+      paid: [null, Validators.required],
+      categoryId: [null, Validators.required]
+      
     });
   }
 
