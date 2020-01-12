@@ -20,8 +20,8 @@
             <tr>
                 <th>Lançamentos</th>
                 <th>Categoria</th>
-                <th>Valor R$</th>
-                <th>Ações</th>
+                <th class="text-right">Valor R$</th>
+                <th class="text-center">Ações</th>
             </tr>
         </thead>
         <tbody>
@@ -34,10 +34,16 @@
                 <td>
                     {{entry.category.name}}
                 </td>
-                <td>
-                    {{entry.amount}}
+                <td class="text-right">
+                    <strong [class.text-success]="entry.type === 'revenue'" 
+                            [class.text-danger]="entry.type === 'expense'">
+                        {{entry.amount}}
+                        <br>
+                        <span class="badge badge-light">{{entry.paidText}}</span>
+                    </strong>
+                    
                 </td>
-                <td>
+                <td class="text-center">
                     <a [routerLink]="[entry.id, 'edit']" class="btn btn-outline-info btn-sm mr-2">Editar</a>
                     <button (click)="deleteEntry(entry)" class="btn btn-outline-danger btn-sm">Excluir</button>
                 </td>
