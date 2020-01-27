@@ -5,6 +5,7 @@ import { Observable, throwError } from 'rxjs';
 import { map, catchError, flatMap } from 'rxjs/operators';
 
 import { Entry } from './entry.model';
+import { CategoryService } from '../../categories/shared/category.service';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,8 @@ export class EntryService {
   private apiPath: string = "api/entries";
   
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private categoryService: CategoryService
   ) { }
 
   getAll(): Observable<Entry[]> {
@@ -32,10 +34,18 @@ export class EntryService {
   }
 
   create(entry: Entry): Observable<Entry> {
-    return this.http.post(this.apiPath, entry).pipe(
-      catchError(this.handleError),
-      map(this.jsonDataToEntry)
-    );
+
+    this.categoryService.getById(entry.category).pipe(
+      flatMap(category => {
+        entry.category = category;
+
+        return this.http.post(this.apiPath, entry).pipe(
+          catchError(this.handleError),
+          map(this.jsonDataToEntry)
+          );
+        
+      })
+    )
   }
 
   update(entry: Entry): Observable<Entry> {
