@@ -9,7 +9,7 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ReactiveFormsModule
   ],
-  exports: [
+  exports: [ //disponibiliza esse módulos para serem conhecidos pelos outros módulos que importarem o shared module (esse)
     //shared modules
     CommonModule,
     ReactiveFormsModule
