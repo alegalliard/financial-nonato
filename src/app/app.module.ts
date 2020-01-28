@@ -1,22 +1,26 @@
-import { BrowserModule } from '@angular/platform-browser';
+// import { BrowserModule } from '@angular/platform-browser';
+// import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+// import { HttpClientModule} from '@angular/common/http';
+// import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
+// import { InMemoryDatabase } from './in-memory-database';
+// esses caras aqui em cima foram para o core module
 import { NgModule } from '@angular/core';
-import { HttpClientModule} from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { InMemoryDatabase } from './in-memory-database';
+
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    // BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
-    HttpClientInMemoryWebApiModule.forRoot(InMemoryDatabase) 
+    CoreModule, // carregado uma única vez
+    
     // Configurando todas as chamadas de api para o in-memory-web-api. 
     // Remover quando for fazer a chamada pro backend
   ],
