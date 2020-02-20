@@ -1,5 +1,5 @@
 import { BaseResourceModel } from '../models/base-resource.model';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, throwError } from 'rxjs';
 import { map, catchError, flatMap } from 'rxjs/operators';
 
@@ -7,18 +7,22 @@ import { Injector } from '@angular/core';
 
 export abstract class BaseResourceService<T extends BaseResourceModel> {
     protected http: HttpClient;
+    private httpOptions = {
+        headers : new HttpHeaders({'x-parse-application-id' : 'br.com.metasix.semneura'})
+      }
 
     constructor(
         protected apiPath: string,
-        protected injector: Injector
+        protected injector: Injector,
+        protected jsonDataToResourceFn: (jsonData: any) => T
     ) {
         this.http = injector.get(HttpClient);
     }
 
     getAll(): Observable<T[]> {
-        return this.http.get(this.apiPath).pipe(
+        return this.http.get(this.apiPath, this.httpOptions).pipe(
           catchError(this.handleError),
-          map(this.jsonDataToResources)
+          map(this.jsonDataToResources.bind(this))
         );
       }
     
@@ -26,7 +30,7 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
         const url = `${this.apiPath}/${id}`;
         return this.http.get(url).pipe(
           catchError(this.handleError),
-          map(this.jsonDataToResource)
+          map(this.jsonDataToResource.bind(this))
         );
       }
     
@@ -59,7 +63,9 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
     
       protected jsonDataToResources(jsonData: any[]): T[] {
         const resources: T[] = [];
-        jsonData.forEach(element => resources.push(element as T));
+        jsonData.forEach(
+          element => resources.push(this.jsonDataToResourceFn( element) )
+        );
         return resources;
       }
     
