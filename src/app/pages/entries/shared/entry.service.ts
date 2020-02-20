@@ -1,7 +1,7 @@
 import { Injectable, Injector } from '@angular/core';
 import { BaseResourceService } from '../../../shared/services/base-resource.service';
 
-import { Observable, throwError } from 'rxjs';
+import { Observable } from 'rxjs';
 import { flatMap } from 'rxjs/operators';
 
 import { Entry } from './entry.model';
@@ -16,11 +16,11 @@ export class EntryService extends BaseResourceService<Entry> {
     protected injector: Injector,
     private categoryService: CategoryService
   ) { 
-    super("api/entries", injector);
+    super("api/entries", injector, Entry.fromJson);
   }
 
   create(entry: Entry): Observable<Entry> {
-
+    
     return this.categoryService.getById(entry.categoryId).pipe(
       flatMap(category => {
         entry.category = category;
@@ -42,8 +42,13 @@ export class EntryService extends BaseResourceService<Entry> {
     );
   }
 
+
+
+
+  //PRIVATE
+
     //sobrescrevendo métodos com customizacoes
-  protected jsonDataToEntries(jsonData: any[]): Entry[] {
+  protected jsonDataToResources(jsonData: any[]): Entry[] {
     const entries: Entry[] = [];
 
     jsonData.forEach(element => {
@@ -52,11 +57,6 @@ export class EntryService extends BaseResourceService<Entry> {
     });
     
     return entries;
-  }
-
-  protected handleError(error: any): Observable<any> {
-    console.log(`Erro na requisição => ${error}`);
-    return throwError(error);
   }
 
   protected jsonDataToEntry(jsonData: any): Entry {
