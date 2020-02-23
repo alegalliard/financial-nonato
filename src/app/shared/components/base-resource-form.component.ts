@@ -1,5 +1,5 @@
 import { OnInit, AfterContentChecked, Injector } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 
 import { BaseResourceModel } from '../models/base-resource.model';
@@ -24,7 +24,6 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
       protected injector: Injector,
       public resource: T,
       protected baseResourceService: BaseResourceService<T>,
-      protected resourceService: BaseResourceService<T>,
       protected jsonDataToResourceFn: (jsonData) => T
   ) { 
       this.router = this.injector.get(Router);
@@ -62,19 +61,11 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
     }
   }
 
-//   protected buildResourceForm() {
-//     this.resourceForm = this.formBuilder.group({
-//       id: [null],
-//       name: [null, [Validators.required, Validators.minLength(2)]],
-//       description: [null]
-//     });
-//   }
-
   protected loadResource() {
     if(this.currentAction == 'edit') {
 
       this.route.paramMap.pipe( //observable
-        switchMap(params => this.resourceService.getById(+params.get('id')))
+        switchMap(params => this.baseResourceService.getById(+params.get('id')))
       )
       .subscribe((resource) => {
           this.resource = resource;
@@ -85,25 +76,25 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
   }
 
   protected setPageTitle() {
-    if(this.currentAction === 'new') {
-      this.pageTitle = this.createPageTitle();
+      if(this.currentAction === 'new') {
+          this.pageTitle = this.createPageTitle();
     } else {
-      this.editPageTitle();
+        this.pageTitle = this.editPageTitle();
     }
   }
 
   protected createPageTitle(): string {
-      return 'Novo'
+      return 'Novo';
   }
 
   protected editPageTitle(): string {
-      return 'Editar'
+      return 'Editar';
   }
 
   protected createResource() {
     const resource: T = this.jsonDataToResourceFn(this.resourceForm.value);
 
-    this.resourceService.create(resource)
+    this.baseResourceService.create(resource)
         .subscribe(resource => this.actionsForSuccess(resource),
         error => this.actionsForError(error));
   }
@@ -111,7 +102,7 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
   protected updateResource() {
     const resource: T = this.jsonDataToResourceFn(this.resourceForm.value);
 
-    this.resourceService.update(resource)
+    this.baseResourceService.update(resource)
         .subscribe(resource => this.actionsForSuccess(resource),
                       error => this.actionsForError(error));
         

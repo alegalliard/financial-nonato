@@ -16,7 +16,7 @@
     </div>
 </div>
 
-<form [formGroup]="categoryForm" (submit)="submitForm()">
+<form [formGroup]="resourceForm" (submit)="submitForm()">
     <div class="card">
         <div class="alert alert-danger mb-0" *ngIf="serverErrorMessages">
             <strong>Erro no servidor:</strong>
@@ -34,12 +34,12 @@
                 <div class="form-group col-md-4">
                     <label for="name">Nome</label>
                     <input type="text" class="form-control" id="name" formControlName="name">
-                    <div class="text-danger" *ngIf="categoryForm.get('name').invalid && categoryForm.get('name').touched">
-                        <span *ngIf="categoryForm.get('name').errors.required">
+                    <div class="text-danger" *ngIf="resourceForm.get('name').invalid && resourceForm.get('name').touched">
+                        <span *ngIf="resourceForm.get('name').errors.required">
                             Campo obrigatório
                         </span>
     
-                        <span *ngIf="categoryForm.get('name').errors.minlength">
+                        <span *ngIf="resourceForm.get('name').errors.minlength">
                             Deve conter no mínimo 2 caracteres
                         </span>
                     </div>
@@ -50,7 +50,7 @@
                     <input type="text" class="form-control" id="description" formControlName="description">
                 </div>
             </div>
-            <button [disabled]="submittingForm || categoryForm.invalid" type="submit" class="btn btn-primary">Salvar</button>
+            <button [disabled]="submittingForm || resourceForm.invalid" type="submit" class="btn btn-primary">Salvar</button>
         </div>
     </div>
 </form>
