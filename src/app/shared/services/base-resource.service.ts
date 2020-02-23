@@ -64,7 +64,7 @@ export abstract class BaseResourceService<T extends BaseResourceModel> {
       protected jsonDataToResources(jsonData: any[]): T[] {
         const resources: T[] = [];
         jsonData.forEach(
-          element => resources.push(this.jsonDataToResourceFn( element) )
+          element => resources.push(this.jsonDataToResourceFn(element) )
         );
         return resources;
       }

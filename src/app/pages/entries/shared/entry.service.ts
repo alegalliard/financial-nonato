@@ -20,26 +20,19 @@ export class EntryService extends BaseResourceService<Entry> {
   }
 
   create(entry: Entry): Observable<Entry> {
+    return this.setCategoryAndSendToServer(entry, super.create.bind(this));
     
-    return this.categoryService.getById(entry.categoryId).pipe(
-      flatMap(category => {
-        entry.category = category;
-
-        return super.create(entry);
-        
-      })
-    )
   }
 
   update(entry: Entry): Observable<Entry> {
+    return this.setCategoryAndSendToServer(entry, super.update.bind(this));
+    // return this.categoryService.getById(entry.categoryId).pipe(
+    //   flatMap(category => {
+    //     entry.category = category;
 
-    return this.categoryService.getById(entry.categoryId).pipe(
-      flatMap(category => {
-        entry.category = category;
-
-        return super.update(entry);
-      })
-    );
+    //     return super.update(entry);
+    //   })
+    // );
   }
 
 
@@ -61,5 +54,16 @@ export class EntryService extends BaseResourceService<Entry> {
 
   protected jsonDataToEntry(jsonData: any): Entry {
     return Object.assign(new Entry(), jsonData);
+  }
+
+  private setCategoryAndSendToServer(entry: Entry, sendFn: any) {
+    return this.categoryService.getById(entry.categoryId).pipe(
+      flatMap(category => {
+        entry.category = category;
+
+        return super.create(entry);
+        
+      })
+    )
   }
 }
