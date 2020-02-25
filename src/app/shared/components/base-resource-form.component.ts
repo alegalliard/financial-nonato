@@ -114,7 +114,10 @@ export abstract class BaseResourceFormComponent<T extends BaseResourceModel> imp
     const baseComponentPath = this.route.snapshot.parent.url[0].path;
 
     this.router.navigateByUrl(baseComponentPath, { skipLocationChange: true}) //skipLocationChange não grava no historico
-        .then(() => this.router.navigate([baseComponentPath, resource.id, 'edit']))
+        .then(() => {
+            console.log(resource.id)
+            return this.router.navigate([baseComponentPath, resource.id, 'edit'])
+        })
   }
 
   protected actionsForError(error: any) {

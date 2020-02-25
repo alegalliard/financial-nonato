@@ -1,0 +1,16 @@
+version: '2'
+services:
+#   sandbox.web:
+#     build:
+#       context: .
+#       args:
+#         env: sandbox
+#     ports:
+#       - "8080:80"
+  app:
+    build:
+      context: .
+      args:
+        env: prod
+    ports:
+      - "8081:80"
