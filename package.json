@@ -24,7 +24,7 @@
     "bootstrap": "^4.4.1",
     "chart.js": "^2.9.3",
     "currency-formatter": "^1.5.5",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "moment": "^2.24.0",
     "primeicons": "^2.0.0",
     "primeng": "^9.0.0-rc.2",
